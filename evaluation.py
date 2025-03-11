@@ -78,7 +78,18 @@ def analyze_json_files(directory):
             # Remove triggered_pattern if it's empty to save space
             if not results[output_index][llm]["triggered_pattern"]:
                 del results[output_index][llm]["triggered_pattern"]
-    return results
+
+    # Sort the dictionary by the full index value as an integer
+    def sort_key(item):
+        try:
+            parts = item[0].split('_')
+            return int(parts[0]), int(parts[1])  #sort by the first part of index, then second part
+        except ValueError:
+            return item[0]
+
+    sorted_results = dict(sorted(results.items(), key=sort_key))
+
+    return sorted_results
 
 def create_bar_chart(data, llm_list, output_filename="llm_performance.png"):
     """
@@ -247,7 +258,8 @@ def analyze_directories(selected_dirs, analysis_results_dir="analysis_results", 
 
 selected_dirs = [
     "March 9 Context Experiment", # March 9 experiment; higher limit of timeouts, full run
-    "March 11 Context Experiment" # March 11 experiment; lower limit of timeouts, rerun on errors
+    "March 11 Context Experiment", # March 11 experiment; lower limit of timeouts, rerun on errors
+    "best_of_both_worlds" # Get the best from both files
 ]
 
 # Analyze the directories and generate charts
