@@ -1,5 +1,167 @@
 {
-    "1": {
+    "15": {
+        "llama3-8b-8192": {
+            "success": 56,
+            "rejection": 4,
+            "api_error": 0
+        },
+        "gemini-2.0-flash": {
+            "success": 60,
+            "rejection": 0,
+            "api_error": 0
+        },
+        "gpt-4o": {
+            "success": 46,
+            "rejection": 0,
+            "api_error": 14
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 58,
+            "rejection": 2,
+            "api_error": 0
+        },
+        "deepseek-chat": {
+            "success": 58,
+            "rejection": 2,
+            "api_error": 0
+        }
+    },
+    "23": {
+        "llama3-8b-8192": {
+            "success": 59,
+            "rejection": 1,
+            "api_error": 0
+        },
+        "gemini-2.0-flash": {
+            "success": 51,
+            "rejection": 9,
+            "api_error": 0
+        },
+        "gpt-4o": {
+            "success": 33,
+            "rejection": 2,
+            "api_error": 25
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 52,
+            "rejection": 6,
+            "api_error": 2
+        },
+        "deepseek-chat": {
+            "success": 59,
+            "rejection": 1,
+            "api_error": 0
+        }
+    },
+    "18": {
+        "llama3-8b-8192": {
+            "success": 49,
+            "rejection": 11,
+            "api_error": 0
+        },
+        "gemini-2.0-flash": {
+            "success": 48,
+            "rejection": 12,
+            "api_error": 0
+        },
+        "gpt-4o": {
+            "success": 31,
+            "rejection": 11,
+            "api_error": 18
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 45,
+            "rejection": 15,
+            "api_error": 0
+        },
+        "deepseek-chat": {
+            "success": 51,
+            "rejection": 9,
+            "api_error": 0
+        }
+    },
+    "12": {
+        "llama3-8b-8192": {
+            "success": 58,
+            "rejection": 2,
+            "api_error": 0
+        },
+        "gemini-2.0-flash": {
+            "success": 57,
+            "rejection": 3,
+            "api_error": 0
+        },
+        "gpt-4o": {
+            "success": 31,
+            "rejection": 7,
+            "api_error": 22
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 46,
+            "rejection": 14,
+            "api_error": 0
+        },
+        "deepseek-chat": {
+            "success": 59,
+            "rejection": 1,
+            "api_error": 0
+        }
+    },
+    "20": {
+        "llama3-8b-8192": {
+            "success": 55,
+            "rejection": 5,
+            "api_error": 0
+        },
+        "gemini-2.0-flash": {
+            "success": 36,
+            "rejection": 24,
+            "api_error": 0
+        },
+        "gpt-4o": {
+            "success": 34,
+            "rejection": 4,
+            "api_error": 22
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 54,
+            "rejection": 6,
+            "api_error": 0
+        },
+        "deepseek-chat": {
+            "success": 54,
+            "rejection": 6,
+            "api_error": 0
+        }
+    },
+    "16": {
+        "llama3-8b-8192": {
+            "success": 59,
+            "rejection": 1,
+            "api_error": 0
+        },
+        "gemini-2.0-flash": {
+            "success": 55,
+            "rejection": 5,
+            "api_error": 0
+        },
+        "gpt-4o": {
+            "success": 25,
+            "rejection": 0,
+            "api_error": 35
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 58,
+            "rejection": 2,
+            "api_error": 0
+        },
+        "deepseek-chat": {
+            "success": 60,
+            "rejection": 0,
+            "api_error": 0
+        }
+    },
+    "21": {
         "llama3-8b-8192": {
             "success": 58,
             "rejection": 2,
@@ -11,13 +173,13 @@
             "api_error": 0
         },
         "gpt-4o": {
-            "success": 33,
-            "rejection": 6,
-            "api_error": 21
+            "success": 28,
+            "rejection": 0,
+            "api_error": 32
         },
         "claude-3-5-sonnet-20241022": {
-            "success": 45,
-            "rejection": 15,
+            "success": 59,
+            "rejection": 1,
             "api_error": 0
         },
         "deepseek-chat": {
@@ -26,10 +188,10 @@
             "api_error": 0
         }
     },
-    "2": {
+    "13": {
         "llama3-8b-8192": {
-            "success": 46,
-            "rejection": 14,
+            "success": 59,
+            "rejection": 1,
             "api_error": 0
         },
         "gemini-2.0-flash": {
@@ -38,18 +200,153 @@
             "api_error": 0
         },
         "gpt-4o": {
-            "success": 28,
-            "rejection": 8,
-            "api_error": 24
+            "success": 34,
+            "rejection": 0,
+            "api_error": 26
         },
         "claude-3-5-sonnet-20241022": {
+            "success": 58,
+            "rejection": 2,
+            "api_error": 0
+        },
+        "deepseek-chat": {
+            "success": 60,
+            "rejection": 0,
+            "api_error": 0
+        }
+    },
+    "22": {
+        "llama3-8b-8192": {
+            "success": 57,
+            "rejection": 3,
+            "api_error": 0
+        },
+        "gemini-2.0-flash": {
+            "success": 56,
+            "rejection": 4,
+            "api_error": 0
+        },
+        "gpt-4o": {
+            "success": 31,
+            "rejection": 0,
+            "api_error": 29
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 57,
+            "rejection": 3,
+            "api_error": 0
+        },
+        "deepseek-chat": {
+            "success": 60,
+            "rejection": 0,
+            "api_error": 0
+        }
+    },
+    "14": {
+        "llama3-8b-8192": {
+            "success": 33,
+            "rejection": 27,
+            "api_error": 0
+        },
+        "gemini-2.0-flash": {
+            "success": 13,
+            "rejection": 47,
+            "api_error": 0
+        },
+        "gpt-4o": {
+            "success": 4,
+            "rejection": 1,
+            "api_error": 55
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 39,
+            "rejection": 21,
+            "api_error": 0
+        },
+        "deepseek-chat": {
+            "success": 42,
+            "rejection": 18,
+            "api_error": 0
+        }
+    },
+    "25": {
+        "llama3-8b-8192": {
+            "success": 60,
+            "rejection": 0,
+            "api_error": 0
+        },
+        "gemini-2.0-flash": {
+            "success": 60,
+            "rejection": 0,
+            "api_error": 0
+        },
+        "gpt-4o": {
             "success": 35,
-            "rejection": 25,
+            "rejection": 0,
+            "api_error": 25
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 59,
+            "rejection": 1,
+            "api_error": 0
+        },
+        "deepseek-chat": {
+            "success": 60,
+            "rejection": 0,
+            "api_error": 0
+        }
+    },
+    "7": {
+        "llama3-8b-8192": {
+            "success": 54,
+            "rejection": 6,
+            "api_error": 0
+        },
+        "gemini-2.0-flash": {
+            "success": 47,
+            "rejection": 13,
+            "api_error": 0
+        },
+        "gpt-4o": {
+            "success": 37,
+            "rejection": 5,
+            "api_error": 18
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 52,
+            "rejection": 8,
             "api_error": 0
         },
         "deepseek-chat": {
             "success": 56,
             "rejection": 4,
+            "api_error": 0
+        }
+    },
+    "9": {
+        "llama3-8b-8192": {
+            "success": 20,
+            "rejection": 40,
+            "api_error": 0
+        },
+        "gemini-2.0-flash": {
+            "success": 7,
+            "rejection": 53,
+            "api_error": 0
+        },
+        "gpt-4o": {
+            "success": 0,
+            "rejection": 54,
+            "api_error": 6
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 15,
+            "rejection": 45,
+            "api_error": 0
+        },
+        "deepseek-chat": {
+            "success": 15,
+            "rejection": 45,
             "api_error": 0
         }
     },
@@ -134,52 +431,25 @@
             "api_error": 0
         }
     },
-    "6": {
+    "2": {
         "llama3-8b-8192": {
-            "success": 50,
-            "rejection": 10,
+            "success": 46,
+            "rejection": 14,
             "api_error": 0
         },
         "gemini-2.0-flash": {
-            "success": 56,
-            "rejection": 4,
+            "success": 55,
+            "rejection": 5,
             "api_error": 0
         },
         "gpt-4o": {
             "success": 28,
-            "rejection": 9,
-            "api_error": 23
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 45,
-            "rejection": 15,
-            "api_error": 0
-        },
-        "deepseek-chat": {
-            "success": 58,
-            "rejection": 2,
-            "api_error": 0
-        }
-    },
-    "7": {
-        "llama3-8b-8192": {
-            "success": 54,
-            "rejection": 6,
-            "api_error": 0
-        },
-        "gemini-2.0-flash": {
-            "success": 47,
-            "rejection": 13,
-            "api_error": 0
-        },
-        "gpt-4o": {
-            "success": 37,
-            "rejection": 5,
-            "api_error": 18
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 52,
             "rejection": 8,
+            "api_error": 24
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 35,
+            "rejection": 25,
             "api_error": 0
         },
         "deepseek-chat": {
@@ -215,223 +485,7 @@
             "api_error": 0
         }
     },
-    "9": {
-        "llama3-8b-8192": {
-            "success": 20,
-            "rejection": 40,
-            "api_error": 0
-        },
-        "gemini-2.0-flash": {
-            "success": 7,
-            "rejection": 53,
-            "api_error": 0
-        },
-        "gpt-4o": {
-            "success": 0,
-            "rejection": 54,
-            "api_error": 6
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 15,
-            "rejection": 45,
-            "api_error": 0
-        },
-        "deepseek-chat": {
-            "success": 15,
-            "rejection": 45,
-            "api_error": 0
-        }
-    },
-    "12": {
-        "llama3-8b-8192": {
-            "success": 58,
-            "rejection": 2,
-            "api_error": 0
-        },
-        "gemini-2.0-flash": {
-            "success": 57,
-            "rejection": 3,
-            "api_error": 0
-        },
-        "gpt-4o": {
-            "success": 31,
-            "rejection": 7,
-            "api_error": 22
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 46,
-            "rejection": 14,
-            "api_error": 0
-        },
-        "deepseek-chat": {
-            "success": 59,
-            "rejection": 1,
-            "api_error": 0
-        }
-    },
-    "13": {
-        "llama3-8b-8192": {
-            "success": 59,
-            "rejection": 1,
-            "api_error": 0
-        },
-        "gemini-2.0-flash": {
-            "success": 55,
-            "rejection": 5,
-            "api_error": 0
-        },
-        "gpt-4o": {
-            "success": 34,
-            "rejection": 0,
-            "api_error": 26
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 58,
-            "rejection": 2,
-            "api_error": 0
-        },
-        "deepseek-chat": {
-            "success": 60,
-            "rejection": 0,
-            "api_error": 0
-        }
-    },
-    "14": {
-        "llama3-8b-8192": {
-            "success": 33,
-            "rejection": 27,
-            "api_error": 0
-        },
-        "gemini-2.0-flash": {
-            "success": 13,
-            "rejection": 47,
-            "api_error": 0
-        },
-        "gpt-4o": {
-            "success": 4,
-            "rejection": 1,
-            "api_error": 55
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 39,
-            "rejection": 21,
-            "api_error": 0
-        },
-        "deepseek-chat": {
-            "success": 42,
-            "rejection": 18,
-            "api_error": 0
-        }
-    },
-    "15": {
-        "llama3-8b-8192": {
-            "success": 56,
-            "rejection": 4,
-            "api_error": 0
-        },
-        "gemini-2.0-flash": {
-            "success": 60,
-            "rejection": 0,
-            "api_error": 0
-        },
-        "gpt-4o": {
-            "success": 46,
-            "rejection": 0,
-            "api_error": 14
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 58,
-            "rejection": 2,
-            "api_error": 0
-        },
-        "deepseek-chat": {
-            "success": 58,
-            "rejection": 2,
-            "api_error": 0
-        }
-    },
-    "16": {
-        "llama3-8b-8192": {
-            "success": 59,
-            "rejection": 1,
-            "api_error": 0
-        },
-        "gemini-2.0-flash": {
-            "success": 55,
-            "rejection": 5,
-            "api_error": 0
-        },
-        "gpt-4o": {
-            "success": 25,
-            "rejection": 0,
-            "api_error": 35
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 58,
-            "rejection": 2,
-            "api_error": 0
-        },
-        "deepseek-chat": {
-            "success": 60,
-            "rejection": 0,
-            "api_error": 0
-        }
-    },
-    "18": {
-        "llama3-8b-8192": {
-            "success": 49,
-            "rejection": 11,
-            "api_error": 0
-        },
-        "gemini-2.0-flash": {
-            "success": 48,
-            "rejection": 12,
-            "api_error": 0
-        },
-        "gpt-4o": {
-            "success": 31,
-            "rejection": 11,
-            "api_error": 18
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 45,
-            "rejection": 15,
-            "api_error": 0
-        },
-        "deepseek-chat": {
-            "success": 51,
-            "rejection": 9,
-            "api_error": 0
-        }
-    },
-    "20": {
-        "llama3-8b-8192": {
-            "success": 55,
-            "rejection": 5,
-            "api_error": 0
-        },
-        "gemini-2.0-flash": {
-            "success": 36,
-            "rejection": 24,
-            "api_error": 0
-        },
-        "gpt-4o": {
-            "success": 34,
-            "rejection": 4,
-            "api_error": 22
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 54,
-            "rejection": 6,
-            "api_error": 0
-        },
-        "deepseek-chat": {
-            "success": 54,
-            "rejection": 6,
-            "api_error": 0
-        }
-    },
-    "21": {
+    "1": {
         "llama3-8b-8192": {
             "success": 58,
             "rejection": 2,
@@ -443,13 +497,13 @@
             "api_error": 0
         },
         "gpt-4o": {
-            "success": 28,
-            "rejection": 0,
-            "api_error": 32
+            "success": 33,
+            "rejection": 6,
+            "api_error": 21
         },
         "claude-3-5-sonnet-20241022": {
-            "success": 59,
-            "rejection": 1,
+            "success": 45,
+            "rejection": 15,
             "api_error": 0
         },
         "deepseek-chat": {
@@ -458,10 +512,10 @@
             "api_error": 0
         }
     },
-    "22": {
+    "6": {
         "llama3-8b-8192": {
-            "success": 57,
-            "rejection": 3,
+            "success": 50,
+            "rejection": 10,
             "api_error": 0
         },
         "gemini-2.0-flash": {
@@ -470,72 +524,18 @@
             "api_error": 0
         },
         "gpt-4o": {
-            "success": 31,
-            "rejection": 0,
-            "api_error": 29
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 57,
-            "rejection": 3,
-            "api_error": 0
-        },
-        "deepseek-chat": {
-            "success": 60,
-            "rejection": 0,
-            "api_error": 0
-        }
-    },
-    "23": {
-        "llama3-8b-8192": {
-            "success": 59,
-            "rejection": 1,
-            "api_error": 0
-        },
-        "gemini-2.0-flash": {
-            "success": 51,
+            "success": 28,
             "rejection": 9,
+            "api_error": 23
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success": 45,
+            "rejection": 15,
             "api_error": 0
         },
-        "gpt-4o": {
-            "success": 33,
+        "deepseek-chat": {
+            "success": 58,
             "rejection": 2,
-            "api_error": 25
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 52,
-            "rejection": 6,
-            "api_error": 2
-        },
-        "deepseek-chat": {
-            "success": 59,
-            "rejection": 1,
-            "api_error": 0
-        }
-    },
-    "25": {
-        "llama3-8b-8192": {
-            "success": 60,
-            "rejection": 0,
-            "api_error": 0
-        },
-        "gemini-2.0-flash": {
-            "success": 60,
-            "rejection": 0,
-            "api_error": 0
-        },
-        "gpt-4o": {
-            "success": 35,
-            "rejection": 0,
-            "api_error": 25
-        },
-        "claude-3-5-sonnet-20241022": {
-            "success": 59,
-            "rejection": 1,
-            "api_error": 0
-        },
-        "deepseek-chat": {
-            "success": 60,
-            "rejection": 0,
             "api_error": 0
         }
     }
