@@ -76,7 +76,7 @@ def create_bar_chart(data, llm_list, output_filename="llm_performance.png"):
     ax.set_title('LLM Performance by Top-Level Index', fontsize=16)
     ax.set_xticks(index_positions)
     ax.set_xticklabels(indices, rotation=45, ha="right")
-    ax.set_ylim([0, 60])  # Adjust y-axis limit
+    ax.set_ylim([0, 60])  # 30 prompts in a given category, 2 calls per LLM, 60 total calls per LLM
 
     ax.grid(axis='y', linestyle='--')
     ax.legend(loc='upper right', ncol=n_llms)
@@ -90,7 +90,8 @@ def create_bar_chart(data, llm_list, output_filename="llm_performance.png"):
 def analyze_directories(selected_dirs, analysis_results_dir="analysis_results", output_prefix="llm_performance"):
     """
     Analyzes multiple directories, loading corresponding 'analysis_results.json' files
-    and generates a bar chart *for each* directory.
+    and generates a bar chart *for each* directory, along with a JSON file summarizing
+    the aggregated results.
 
     Args:
         selected_dirs (list): A list of directory paths to API responses.
@@ -121,6 +122,26 @@ def analyze_directories(selected_dirs, analysis_results_dir="analysis_results", 
                 llm_list.extend(llm_data.keys())
                 break  # Only need to examine the first prompt index
             llm_list = list(set(llm_list))  # Remove duplicates
+
+            # Group the data
+            grouped_data = {}
+            for index, llm_data in data.items():
+                top_level_index = int(index.split('_')[0])  # Extract the number before the underscore
+                if top_level_index not in grouped_data:
+                    grouped_data[top_level_index] = {}
+                for llm, counts in llm_data.items():
+                    if llm not in grouped_data[top_level_index]:
+                        grouped_data[top_level_index][llm] = {"success": 0, "rejection": 0, "api_error": 0}
+                    grouped_data[top_level_index][llm]["success"] += counts["success"]
+                    grouped_data[top_level_index][llm]["rejection"] += counts["rejection"]
+                    grouped_data[top_level_index][llm]["api_error"] += counts["api_error"]
+
+            # Save grouped data to JSON
+            grouped_json_filename = f"grouped_data_{date_context_path}.json"
+            output_path = os.path.join("llm_performance", grouped_json_filename)
+            with open(output_path, "w") as outfile:
+                json.dump(grouped_data, outfile, indent=4)
+            print(f"Grouped JSON data saved to {output_path}")
 
 
             # Create the bar chart for the current analysis results file
