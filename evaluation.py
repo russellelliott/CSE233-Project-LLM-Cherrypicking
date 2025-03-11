@@ -190,6 +190,9 @@ def analyze_directories(selected_dirs, analysis_results_dir="analysis_results", 
     if not os.path.exists("llm_performance"):
         os.makedirs("llm_performance")
 
+    # Define the desired LLM order
+    LLM_LIST = ["llama3-8b-8192", "gemini-2.0-flash", "gpt-4o", "claude-3-5-sonnet-20241022", "deepseek-chat"]
+
     # Create the analysis_results directory if it doesn't exist
     if not os.path.exists(analysis_results_dir):
         os.makedirs(analysis_results_dir)
@@ -217,12 +220,8 @@ def analyze_directories(selected_dirs, analysis_results_dir="analysis_results", 
             with open(analysis_file_path, "r") as f:
                 data = json.load(f)
 
-            # Extract LLM list from the first entry
-            llm_list = []
-            for prompt_index, llm_data in data.items():
-                llm_list.extend(llm_data.keys())
-                break  # Only need to examine the first prompt index
-            llm_list = list(set(llm_list))  # Remove duplicates
+            # Use the predefined LLM list instead of extracting it from the data
+            llm_list = LLM_LIST
 
             # Group the data
             grouped_data = {}
@@ -230,12 +229,11 @@ def analyze_directories(selected_dirs, analysis_results_dir="analysis_results", 
                 top_level_index = int(index.split('_')[0])  # Extract the number before the underscore
                 if top_level_index not in grouped_data:
                     grouped_data[top_level_index] = {}
-                for llm, counts in llm_data.items():
-                    if llm not in grouped_data[top_level_index]:
+                for llm in llm_list: #group by predefined list instead of what data has
+                    if llm in llm_data: #include the data, or create a blank if doesn't exist
+                        grouped_data[top_level_index][llm] = llm_data[llm]
+                    else:
                         grouped_data[top_level_index][llm] = {"success": 0, "rejection": 0, "api_error": 0}
-                    grouped_data[top_level_index][llm]["success"] += counts["success"]
-                    grouped_data[top_level_index][llm]["rejection"] += counts["rejection"]
-                    grouped_data[top_level_index][llm]["api_error"] += counts["api_error"]
 
             # Save grouped data to JSON
             grouped_json_filename = f"grouped_data_{date_context_path}.json"
@@ -254,8 +252,6 @@ def analyze_directories(selected_dirs, analysis_results_dir="analysis_results", 
             print(f"Error: Invalid JSON format in: {analysis_file_path}")
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
-
-
 selected_dirs = [
     "March 9 Context Experiment", # March 9 experiment; higher limit of timeouts, full run
     "March 11 Context Experiment", # March 11 experiment; lower limit of timeouts, rerun on errors
