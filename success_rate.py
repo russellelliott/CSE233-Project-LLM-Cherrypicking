@@ -68,12 +68,13 @@ def calculate_success_rate(llm_data):
     return (llm_data["success"] / total_calls) * 100 if total_calls > 0 else 0
 
 
-def create_overall_performance_bar_graph(json_file):
+def create_overall_performance_bar_graph(json_file, output_dir):
     """
     Creates a bar graph of overall LLM performance based on a JSON file.
 
     Args:
         json_file (str): Path to the JSON file containing the overall LLM performance data.
+        output_dir (str): Directory to save the graph.
     """
 
     with open(json_file, "r") as f:
@@ -90,19 +91,65 @@ def create_overall_performance_bar_graph(json_file):
     plt.ylim(0, 100)  # Set y-axis limit to 100%
     plt.xticks(rotation=45, ha="right")  # Rotate x-axis labels for better readability
     plt.tight_layout()  # Adjust layout to prevent labels from overlapping
-    plt.savefig("overall_llm_performance_bar_graph.png")  # Save the graph as an image
-    plt.show()
+    plt.savefig(os.path.join(output_dir, "overall_llm_performance_bar_graph.png"))  # Save the graph as an image
+    plt.close()
+
+
+def create_prompt_category_bar_graph(json_file, output_dir):
+    """
+    Creates a bar graph of prompt category success rates for each LLM based on a JSON file.
+
+    Args:
+        json_file (str): Path to the JSON file containing the category performance data.
+        output_dir (str): Directory to save the graph.
+    """
+    with open(json_file, "r") as f:
+        data = json.load(f)
+
+    # Extract data for plotting
+    categories = list(data.keys())[:-2]  # Exclude total_prompts and overall_success_rate
+    llms = list(data[categories[0]].keys())  # Get the LLMs from the first category
+    n_llms = len(llms)
+
+    bar_width = 0.8 / n_llms
+    group_width = 1
+
+    plt.figure(figsize=(16, 8))
+    index_positions = range(len(categories))
+
+    # Plot each LLM's success rates
+    for i, llm in enumerate(llms):
+        x = [pos + (i - n_llms / 2 + bar_width/2) * bar_width for pos in index_positions]  #shift positions for each LLM
+        success_rates = [data[category][llm]["success_rate"] for category in categories]
+        plt.bar(x, success_rates, bar_width, label=llm)
+
+    # Customize the plot
+    plt.xlabel("Prompt Category", fontsize=14)
+    plt.ylabel("Success Rate (%)", fontsize=14)
+    plt.title("LLM Performance by Prompt Category", fontsize=16)
+    plt.xticks(index_positions, categories, rotation=45, ha="right")
+    plt.ylim(0, 100)
+    plt.legend()
+    plt.tight_layout()
+
+    plt.savefig(os.path.join(output_dir, "prompt_category_performance_bar_graph.png"))
+    plt.close()
 
 
 def main():
     """
-    Main function to perform the analysis, output JSON files, and create the bar graph.
+    Main function to perform the analysis, output JSON files, and create the bar graphs.
     """
 
     file_list = [
         "llm_performance/grouped_data_best_of_both_worlds.json",
         "llm_performance/grouped_data_2025-03-08_09-55.json"
     ]
+
+    # Create the output directory if it doesn't exist
+    output_dir = "success_rate"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
     llm_performance, overall_success_rate, total_prompts, prompt_category_data = analyze_grouped_data(file_list)
 
@@ -127,7 +174,7 @@ def main():
     overall_json_output["overall_success_rate"] = overall_success_rate
 
     # Output overall performance to JSON file
-    overall_output_file = "overall_llm_performance.json"
+    overall_output_file = os.path.join(output_dir, "overall_llm_performance.json")
     with open(overall_output_file, "w") as f:
         json.dump(overall_json_output, f, indent=4)
     print(f"\nOverall LLM performance saved to {overall_output_file}")
@@ -143,13 +190,16 @@ def main():
     category_json_output["overall_success_rate"] = overall_success_rate
 
     # Output category-level performance to JSON file
-    category_output_file = "prompt_category_analysis.json"
+    category_output_file = os.path.join(output_dir, "prompt_category_analysis.json")
     with open(category_output_file, "w") as f:
         json.dump(category_json_output, f, indent=4)
     print(f"Category-level analysis saved to {category_output_file}")
 
     # Create the overall performance bar graph
-    create_overall_performance_bar_graph(overall_output_file)
+    create_overall_performance_bar_graph(overall_output_file, output_dir)
+
+    # Create the prompt category performance bar graph
+    create_prompt_category_bar_graph(category_output_file, output_dir)
 
 
 if __name__ == "__main__":
