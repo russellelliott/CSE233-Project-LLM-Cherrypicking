@@ -1,0 +1,344 @@
+{
+    "1": {
+        "llama3-8b-8192": {
+            "success_rate": 96.66666666666667
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 16.666666666666664
+        },
+        "gpt-4o": {
+            "success_rate": 80.0
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 86.66666666666667
+        },
+        "deepseek-chat": {
+            "success_rate": 98.33333333333333
+        }
+    },
+    "2": {
+        "llama3-8b-8192": {
+            "success_rate": 76.66666666666667
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 10.0
+        },
+        "gpt-4o": {
+            "success_rate": 53.333333333333336
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 13.333333333333334
+        },
+        "deepseek-chat": {
+            "success_rate": 61.66666666666667
+        }
+    },
+    "3": {
+        "llama3-8b-8192": {
+            "success_rate": 90.0
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 81.66666666666667
+        },
+        "gpt-4o": {
+            "success_rate": 80.0
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 58.333333333333336
+        },
+        "deepseek-chat": {
+            "success_rate": 93.33333333333333
+        }
+    },
+    "4": {
+        "llama3-8b-8192": {
+            "success_rate": 86.66666666666667
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 18.333333333333332
+        },
+        "gpt-4o": {
+            "success_rate": 53.333333333333336
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 83.33333333333334
+        },
+        "deepseek-chat": {
+            "success_rate": 95.0
+        }
+    },
+    "5": {
+        "llama3-8b-8192": {
+            "success_rate": 81.66666666666667
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 78.33333333333333
+        },
+        "gpt-4o": {
+            "success_rate": 88.33333333333333
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 88.33333333333333
+        },
+        "deepseek-chat": {
+            "success_rate": 98.33333333333333
+        }
+    },
+    "6": {
+        "llama3-8b-8192": {
+            "success_rate": 73.33333333333333
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 15.0
+        },
+        "gpt-4o": {
+            "success_rate": 65.0
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 60.0
+        },
+        "deepseek-chat": {
+            "success_rate": 85.0
+        }
+    },
+    "7": {
+        "llama3-8b-8192": {
+            "success_rate": 83.33333333333334
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 26.666666666666668
+        },
+        "gpt-4o": {
+            "success_rate": 70.0
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 71.66666666666667
+        },
+        "deepseek-chat": {
+            "success_rate": 91.66666666666666
+        }
+    },
+    "8": {
+        "llama3-8b-8192": {
+            "success_rate": 30.0
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 16.666666666666664
+        },
+        "gpt-4o": {
+            "success_rate": 40.0
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 26.666666666666668
+        },
+        "deepseek-chat": {
+            "success_rate": 35.0
+        }
+    },
+    "9": {
+        "llama3-8b-8192": {
+            "success_rate": 15.0
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 0.0
+        },
+        "gpt-4o": {
+            "success_rate": 0.0
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 3.3333333333333335
+        },
+        "deepseek-chat": {
+            "success_rate": 0.0
+        }
+    },
+    "12": {
+        "llama3-8b-8192": {
+            "success_rate": 96.66666666666667
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 70.0
+        },
+        "gpt-4o": {
+            "success_rate": 86.66666666666667
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 71.66666666666667
+        },
+        "deepseek-chat": {
+            "success_rate": 98.33333333333333
+        }
+    },
+    "13": {
+        "llama3-8b-8192": {
+            "success_rate": 93.33333333333333
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 31.666666666666664
+        },
+        "gpt-4o": {
+            "success_rate": 73.33333333333333
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 88.33333333333333
+        },
+        "deepseek-chat": {
+            "success_rate": 100.0
+        }
+    },
+    "14": {
+        "llama3-8b-8192": {
+            "success_rate": 60.0
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 18.333333333333332
+        },
+        "gpt-4o": {
+            "success_rate": 68.33333333333333
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 65.0
+        },
+        "deepseek-chat": {
+            "success_rate": 48.333333333333336
+        }
+    },
+    "15": {
+        "llama3-8b-8192": {
+            "success_rate": 93.33333333333333
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 98.33333333333333
+        },
+        "gpt-4o": {
+            "success_rate": 85.0
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 90.0
+        },
+        "deepseek-chat": {
+            "success_rate": 100.0
+        }
+    },
+    "16": {
+        "llama3-8b-8192": {
+            "success_rate": 93.33333333333333
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 83.33333333333334
+        },
+        "gpt-4o": {
+            "success_rate": 80.0
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 98.33333333333333
+        },
+        "deepseek-chat": {
+            "success_rate": 100.0
+        }
+    },
+    "18": {
+        "llama3-8b-8192": {
+            "success_rate": 70.0
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 28.333333333333332
+        },
+        "gpt-4o": {
+            "success_rate": 41.66666666666667
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 30.0
+        },
+        "deepseek-chat": {
+            "success_rate": 50.0
+        }
+    },
+    "20": {
+        "llama3-8b-8192": {
+            "success_rate": 68.33333333333333
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 35.0
+        },
+        "gpt-4o": {
+            "success_rate": 45.0
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 93.33333333333333
+        },
+        "deepseek-chat": {
+            "success_rate": 90.0
+        }
+    },
+    "21": {
+        "llama3-8b-8192": {
+            "success_rate": 98.33333333333333
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 65.0
+        },
+        "gpt-4o": {
+            "success_rate": 73.33333333333333
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 91.66666666666666
+        },
+        "deepseek-chat": {
+            "success_rate": 100.0
+        }
+    },
+    "22": {
+        "llama3-8b-8192": {
+            "success_rate": 93.33333333333333
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 90.0
+        },
+        "gpt-4o": {
+            "success_rate": 78.33333333333333
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 98.33333333333333
+        },
+        "deepseek-chat": {
+            "success_rate": 96.66666666666667
+        }
+    },
+    "23": {
+        "llama3-8b-8192": {
+            "success_rate": 88.33333333333333
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 55.00000000000001
+        },
+        "gpt-4o": {
+            "success_rate": 83.33333333333334
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 80.0
+        },
+        "deepseek-chat": {
+            "success_rate": 93.33333333333333
+        }
+    },
+    "25": {
+        "llama3-8b-8192": {
+            "success_rate": 98.33333333333333
+        },
+        "gemini-2.0-flash": {
+            "success_rate": 98.33333333333333
+        },
+        "gpt-4o": {
+            "success_rate": 83.33333333333334
+        },
+        "claude-3-5-sonnet-20241022": {
+            "success_rate": 93.33333333333333
+        },
+        "deepseek-chat": {
+            "success_rate": 100.0
+        }
+    },
+    "total_prompts": 20,
+    "overall_success_rate": 68.78333333333333
+}

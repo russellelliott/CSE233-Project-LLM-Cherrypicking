@@ -68,13 +68,14 @@ def calculate_success_rate(llm_data):
     return (llm_data["success"] / total_calls) * 100 if total_calls > 0 else 0
 
 
-def create_overall_performance_bar_graph(json_file, output_dir):
+def create_overall_performance_bar_graph(json_file, output_dir, file_prefix):
     """
     Creates a bar graph of overall LLM performance based on a JSON file.
 
     Args:
         json_file (str): Path to the JSON file containing the overall LLM performance data.
         output_dir (str): Directory to save the graph.
+        file_prefix (str): Prefix for the output filename (to distinguish graphs).
     """
 
     with open(json_file, "r") as f:
@@ -91,17 +92,18 @@ def create_overall_performance_bar_graph(json_file, output_dir):
     plt.ylim(0, 100)  # Set y-axis limit to 100%
     plt.xticks(rotation=45, ha="right")  # Rotate x-axis labels for better readability
     plt.tight_layout()  # Adjust layout to prevent labels from overlapping
-    plt.savefig(os.path.join(output_dir, "overall_llm_performance_bar_graph.png"))  # Save the graph as an image
+    plt.savefig(os.path.join(output_dir, f"{file_prefix}_overall_llm_performance_bar_graph.png"))  # Save the graph as an image
     plt.close()
 
 
-def create_prompt_category_bar_graph(json_file, output_dir):
+def create_prompt_category_bar_graph(json_file, output_dir, file_prefix):
     """
     Creates a bar graph of prompt category success rates for each LLM based on a JSON file.
 
     Args:
         json_file (str): Path to the JSON file containing the category performance data.
         output_dir (str): Directory to save the graph.
+        file_prefix (str): Prefix for the output filename (to distinguish graphs).
     """
     with open(json_file, "r") as f:
         data = json.load(f)
@@ -126,13 +128,13 @@ def create_prompt_category_bar_graph(json_file, output_dir):
     # Customize the plot
     plt.xlabel("Prompt Category", fontsize=14)
     plt.ylabel("Success Rate (%)", fontsize=14)
-    plt.title("LLM Performance by Prompt Category", fontsize=16)
+    plt.title("LLM Performance by Prompt Category")
     plt.xticks(index_positions, categories, rotation=45, ha="right")
     plt.ylim(0, 100)
     plt.legend()
     plt.tight_layout()
 
-    plt.savefig(os.path.join(output_dir, "prompt_category_performance_bar_graph.png"))
+    plt.savefig(os.path.join(output_dir, f"{file_prefix}_prompt_category_performance_bar_graph.png"))
     plt.close()
 
 
@@ -141,65 +143,72 @@ def main():
     Main function to perform the analysis, output JSON files, and create the bar graphs.
     """
 
-    file_list = [
-        "llm_performance/grouped_data_best_of_both_worlds.json",
-        "llm_performance/grouped_data_2025-03-08_09-55.json"
-    ]
-
     # Create the output directory if it doesn't exist
     output_dir = "success_rate"
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    llm_performance, overall_success_rate, total_prompts, prompt_category_data = analyze_grouped_data(file_list)
+    # Define the file list and prefixes
+    file_info = [
+        {"file": "llm_performance/grouped_data_best_of_both_worlds.json", "prefix": "best_of_both_worlds"},
+        {"file": "llm_performance/grouped_data_2025-03-08_09-55.json", "prefix": "date_2025_03_08"} #make it something safe
+    ]
 
-    # Prepare data for overall performance JSON output
-    overall_json_output = {}
-    ranked_llms = sorted(
-        llm_performance.items(),
-        key=lambda item: calculate_success_rate(item[1]),
-        reverse=True
-    )
+    for item in file_info:
+        file_path = item["file"]
+        file_prefix = item["prefix"]
 
-    for rank, (llm, metrics) in enumerate(ranked_llms, 1):
-        success_rate = calculate_success_rate(metrics)
-        overall_json_output[llm] = {
-            "successes": metrics["success"],
-            "rejections": metrics["rejection"],
-            "api_errors": metrics["api_error"],
-            "success_rate": success_rate
-        }
+        # Perform analysis for the current file
+        llm_performance, overall_success_rate, total_prompts, prompt_category_data = analyze_grouped_data([file_path])
 
-    overall_json_output["total_prompts"] = total_prompts
-    overall_json_output["overall_success_rate"] = overall_success_rate
+        # Prepare data for overall performance JSON output
+        overall_json_output = {}
+        ranked_llms = sorted(
+            llm_performance.items(),
+            key=lambda item: calculate_success_rate(item[1]),
+            reverse=True
+        )
 
-    # Output overall performance to JSON file
-    overall_output_file = os.path.join(output_dir, "overall_llm_performance.json")
-    with open(overall_output_file, "w") as f:
-        json.dump(overall_json_output, f, indent=4)
-    print(f"\nOverall LLM performance saved to {overall_output_file}")
-
-    # Prepare data for category-level performance JSON output
-    category_json_output = {}
-    for category, category_data in prompt_category_data.items():
-        category_json_output[category] = {}
-        for llm, metrics in category_data.items():
+        for rank, (llm, metrics) in enumerate(ranked_llms, 1):
             success_rate = calculate_success_rate(metrics)
-            category_json_output[category][llm] = {"success_rate": success_rate}
-    category_json_output["total_prompts"] = total_prompts
-    category_json_output["overall_success_rate"] = overall_success_rate
+            # Use .get() to safely access potential missing keys
+            overall_json_output[llm] = {
+                "successes": metrics.get("success", 0),
+                "rejections": metrics.get("rejection", 0),  # Use .get() instead of direct access
+                "api_errors": metrics.get("api_error", 0),  # Use .get() instead of direct access
+                "success_rate": success_rate
+            }
 
-    # Output category-level performance to JSON file
-    category_output_file = os.path.join(output_dir, "prompt_category_analysis.json")
-    with open(category_output_file, "w") as f:
-        json.dump(category_json_output, f, indent=4)
-    print(f"Category-level analysis saved to {category_output_file}")
+        overall_json_output["total_prompts"] = total_prompts
+        overall_json_output["overall_success_rate"] = overall_success_rate
 
-    # Create the overall performance bar graph
-    create_overall_performance_bar_graph(overall_output_file, output_dir)
+        # Output overall performance to JSON file
+        overall_output_file = os.path.join(output_dir, f"{file_prefix}_overall_llm_performance.json")
+        with open(overall_output_file, "w") as f:
+            json.dump(overall_json_output, f, indent=4)
+        print(f"\nOverall LLM performance saved to {overall_output_file}")
 
-    # Create the prompt category performance bar graph
-    create_prompt_category_bar_graph(category_output_file, output_dir)
+        # Prepare data for category-level performance JSON output
+        category_json_output = {}
+        for category, category_data in prompt_category_data.items():
+            category_json_output[category] = {}
+            for llm, metrics in category_data.items():
+                success_rate = calculate_success_rate(metrics)
+                category_json_output[category][llm] = {"success_rate": success_rate}
+        category_json_output["total_prompts"] = total_prompts
+        category_json_output["overall_success_rate"] = overall_success_rate
+
+        # Output category-level performance to JSON file
+        category_output_file = os.path.join(output_dir, f"{file_prefix}_prompt_category_analysis.json")
+        with open(category_output_file, "w") as f:
+            json.dump(category_json_output, f, indent=4)
+        print(f"Category-level analysis saved to {category_output_file}")
+
+        # Create the overall performance bar graph
+        create_overall_performance_bar_graph(overall_output_file, output_dir, file_prefix)
+
+        # Create the prompt category performance bar graph
+        create_prompt_category_bar_graph(category_output_file, output_dir, file_prefix)
 
 
 if __name__ == "__main__":

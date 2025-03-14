@@ -215,16 +215,19 @@ def analyze_directories(selected_dirs, analysis_results_dir="analysis_results", 
         print(f"Reanalyzing and overwriting: {analysis_file_path}")
         analysis_results = analyze_json_files(api_response_dir)
 
-        with open(analysis_file_path, "w") as f:
-            json.dump(analysis_results, f, indent=4)
-        print(f"Analysis results exported to {analysis_file_path}")
+        #JSON EXPORT REMOVED
+        # with open(analysis_file_path, "w") as f:
+        #     json.dump(analysis_results, f, indent=4)
+        # print(f"Analysis results exported to {analysis_file_path}")
 
 
 
         try:
             # Load the JSON data from the analysis results file
-            with open(analysis_file_path, "r") as f:
-                data = json.load(f)
+            # with open(analysis_file_path, "r") as f:
+            #     data = json.load(f)
+            data = analysis_results # Use the dictionary previously loaded instead
+
 
             # Use the predefined LLM list instead of extracting it from the data
             llm_list = LLM_LIST
@@ -241,12 +244,12 @@ def analyze_directories(selected_dirs, analysis_results_dir="analysis_results", 
                     else:
                         grouped_data[top_level_index][llm] = {"success": 0, "rejection": 0, "api_error": 0}
 
-            # Save grouped data to JSON
-            grouped_json_filename = f"grouped_data_{date_context_path}.json"
-            output_path = os.path.join("llm_performance", grouped_json_filename)
-            with open(output_path, "w") as outfile:
-                json.dump(grouped_data, outfile, indent=4)
-            print(f"Grouped JSON data saved to {output_path}")
+            # Save grouped data to JSON - REMOVED
+            # grouped_json_filename = f"grouped_data_{date_context_path}.json"
+            # output_path = os.path.join("llm_performance", grouped_json_filename)
+            # with open(output_path, "w") as outfile:
+            #     json.dump(grouped_data, outfile, indent=4)
+            # print(f"Grouped JSON data saved to {output_path}")
 
             # Create the bar chart for the current analysis results file
             output_filename = f"{output_prefix}_{date_context_path}.png"

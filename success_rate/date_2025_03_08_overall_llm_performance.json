@@ -1,0 +1,34 @@
+{
+    "deepseek-chat": {
+        "successes": 981,
+        "rejections": 219,
+        "api_errors": 0,
+        "success_rate": 81.75
+    },
+    "llama3-8b-8192": {
+        "successes": 952,
+        "rejections": 248,
+        "api_errors": 0,
+        "success_rate": 79.33333333333333
+    },
+    "claude-3-5-sonnet-20241022": {
+        "successes": 835,
+        "rejections": 330,
+        "api_errors": 35,
+        "success_rate": 69.58333333333333
+    },
+    "gpt-4o": {
+        "successes": 797,
+        "rejections": 213,
+        "api_errors": 190,
+        "success_rate": 66.41666666666667
+    },
+    "gemini-2.0-flash": {
+        "successes": 562,
+        "rejections": 638,
+        "api_errors": 0,
+        "success_rate": 46.833333333333336
+    },
+    "total_prompts": 20,
+    "overall_success_rate": 68.78333333333333
+}

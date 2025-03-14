@@ -6,6 +6,9 @@ first run `cherrypicking.py` to get the "best of both worlds" data
 
 then run `evaluation.py` to get the graphs for all 3 sets
 
+- graph only; makes the graph
+- "json only"; makes the json file
+
 `distance.py` gets the manhattan distance and euclidean distance of the outputs from a directory
 
 `cosine_analaysis` analyzes the cosine file and outputs the average of it across the results of the llms that succeeded
