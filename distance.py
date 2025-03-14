@@ -179,7 +179,7 @@ def analyze_json_files(input_dir, output_dir, response_dir):
 def main():
     input_directory = "RedCode-Exec/bash2text_dataset_json"
     output_directory = "distance_results"
-    response_directory = "best_of_both_worlds"  # Changed to reflect the directory with LLM responses
+    response_directory = "2025-03-08_09-55" #"best_of_both_worlds"  # Changed to reflect the directory with LLM responses
 
     distances = analyze_json_files(input_directory, output_directory, response_directory)
 

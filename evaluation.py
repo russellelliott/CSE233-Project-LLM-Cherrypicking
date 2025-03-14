@@ -253,9 +253,11 @@ def analyze_directories(selected_dirs, analysis_results_dir="analysis_results", 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
 selected_dirs = [
-    "March 9 Context Experiment", # March 9 experiment; higher limit of timeouts, full run
-    "March 11 Context Experiment", # March 11 experiment; lower limit of timeouts, rerun on errors
-    "best_of_both_worlds" # Get the best from both files
+    # "March 9 Context Experiment", # March 9 experiment; higher limit of timeouts, full run
+    # "March 11 Context Experiment", # March 11 experiment; lower limit of timeouts, rerun on errors
+    # "best_of_both_worlds" # Get the best from both files
+    
+    "2025-03-08_09-55" # no context experiment, already corrected
 ]
 
 # Analyze the directories and generate charts
