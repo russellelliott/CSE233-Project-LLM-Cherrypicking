@@ -1,6 +1,7 @@
 import json
 import os
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def analyze_grouped_data(file_list):
@@ -138,6 +139,104 @@ def create_prompt_category_bar_graph(json_file, output_dir, file_prefix):
     plt.close()
 
 
+def create_comparison_bar_graph(file1, file2, output_dir, filename="comparison_graph.png"):
+    """
+    Creates a bar graph comparing the overall LLM success rates from two JSON files.
+
+    Args:
+        file1 (str): Path to the first JSON file.
+        file2 (str): Path to the second JSON file.
+        output_dir (str): Directory to save the graph.
+        filename (str): Name of the output image file.
+    """
+
+    with open(file1, "r") as f:
+        data1 = json.load(f)
+    with open(file2, "r") as f:
+        data2 = json.load(f)
+
+    llms1 = list(data1.keys())[:-2]
+    llms2 = list(data2.keys())[:-2]
+
+    # Ensure both files have the same LLMs (or handle missing LLMs gracefully)
+    all_llms = sorted(list(set(llms1 + llms2)))
+
+    success_rates1 = [data1.get(llm, {}).get("success_rate", 0) for llm in all_llms]  # Use get to handle missing keys
+    success_rates2 = [data2.get(llm, {}).get("success_rate", 0) for llm in all_llms]  # Use get to handle missing keys
+
+    x = np.arange(len(all_llms))  # the label locations
+    width = 0.35  # the width of the bars
+
+    fig, ax = plt.subplots(figsize=(14, 7))
+    rects1 = ax.bar(x - width/2, success_rates1, width, label=os.path.basename(file1).replace("_overall_llm_performance.json", "").replace("_", " "))
+    rects2 = ax.bar(x + width/2, success_rates2, width, label=os.path.basename(file2).replace("_overall_llm_performance.json", "").replace("_", " "))
+
+    # Add some text for labels, title and custom x-axis tick labels, etc.
+    ax.set_ylabel('Success Rate (%)')
+    ax.set_xlabel('LLMs')
+    ax.set_title('LLM Performance Comparison')
+    ax.set_xticks(x)
+    ax.set_xticklabels(all_llms, rotation=45, ha="right")
+    ax.set_ylim(0, 100)
+    ax.legend()
+
+    fig.tight_layout()
+
+    plt.savefig(os.path.join(output_dir, filename))
+    plt.close()
+
+# removed prompt category comparison graph
+# def create_comparison_prompt_category_graph(file1, file2, output_dir, filename="comparison_prompt_category_graph.png"):
+#     """
+#     Creates a grouped bar graph comparing prompt category success rates from two JSON files.
+#     """
+#     with open(file1, "r") as f:
+#         data1 = json.load(f)
+#     with open(file2, "r") as f:
+#         data2 = json.load(f)
+
+#     # Extract categories and LLMs
+#     categories1 = list(data1.keys())[:-2]
+#     categories2 = list(data2.keys())[:-2]
+#     all_categories = sorted(list(set(categories1 + categories2)))  # Combine and sort categories
+
+#     # Extract LLMs from the first category (assuming consistent LLMs across categories)
+#     llms1 = list(data1.get(categories1[0], {}).keys()) if categories1 else []
+#     llms2 = list(data2.get(categories2[0], {}).keys()) if categories2 else []
+#     all_llms = sorted(list(set(llms1 + llms2)))
+
+#     n_llms = len(all_llms)
+#     bar_width = 0.8 / (2 * n_llms)  # Reduced bar width to accommodate both files
+#     group_width = 1
+
+#     plt.figure(figsize=(18, 8))  # Adjusted figure size for better readability
+#     index_positions = np.arange(len(all_categories))
+
+#     # Iterate through LLMs and plot bars for both files
+#     for i, llm in enumerate(all_llms):
+#         # Calculate x positions for the bars for file1
+#         x1 = [pos + (i - n_llms / 2) * 2 * bar_width - bar_width/2 for pos in index_positions]
+#         success_rates1 = [data1.get(category, {}).get(llm, {}).get("success_rate", 0) for category in all_categories]
+#         plt.bar(x1, success_rates1, bar_width, label=f"{os.path.basename(file1).replace('_prompt_category_analysis.json', '').replace('_', ' ')} - {llm}")
+
+#         # Calculate x positions for the bars for file2
+#         x2 = [pos + (i - n_llms / 2) * 2 * bar_width + bar_width/2 for pos in index_positions]
+#         success_rates2 = [data2.get(category, {}).get(llm, {}).get("success_rate", 0) for category in all_categories]
+#         plt.bar(x2, success_rates2, bar_width, label=f"{os.path.basename(file2).replace('_prompt_category_analysis.json', '').replace('_', ' ')} - {llm}")
+
+#     # Customize the plot
+#     plt.xlabel("Prompt Category", fontsize=14)
+#     plt.ylabel("Success Rate (%)", fontsize=14)
+#     plt.title("LLM Performance by Prompt Category Comparison", fontsize=16)
+#     plt.xticks(index_positions, all_categories, rotation=45, ha="right")
+#     plt.ylim(0, 100)
+#     plt.legend(loc='upper left', bbox_to_anchor=(1, 1))  # Place legend outside the plot
+#     plt.tight_layout(rect=[0, 0, 0.85, 1])  # Adjust layout to accommodate legend
+
+#     plt.savefig(os.path.join(output_dir, filename))
+#     plt.close()
+
+
 def main():
     """
     Main function to perform the analysis, output JSON files, and create the bar graphs.
@@ -154,6 +253,7 @@ def main():
         {"file": "llm_performance/grouped_data_2025-03-08_09-55.json", "prefix": "date_2025_03_08"} #make it something safe
     ]
 
+    # Perform analysis and generate individual graphs for each file
     for item in file_info:
         file_path = item["file"]
         file_prefix = item["prefix"]
@@ -209,6 +309,18 @@ def main():
 
         # Create the prompt category performance bar graph
         create_prompt_category_bar_graph(category_output_file, output_dir, file_prefix)
+
+    # Generate comparison graphs
+    overall_files = [os.path.join(output_dir, f"{item['prefix']}_overall_llm_performance.json") for item in file_info]
+    # removed prompt category files in comparison
+    # category_files = [os.path.join(output_dir, f"{item['prefix']}_prompt_category_analysis.json") for item in file_info]
+
+    if len(overall_files) == 2:
+        create_comparison_bar_graph(overall_files[0], overall_files[1], output_dir)
+        # removed prompt category graph
+        # create_comparison_prompt_category_graph(category_files[0], category_files[1], output_dir)
+    else:
+        print("Warning:  Need exactly two files to make comparisons. Skipping Comparison Graphs")
 
 
 if __name__ == "__main__":
