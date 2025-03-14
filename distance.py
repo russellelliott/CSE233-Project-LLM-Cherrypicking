@@ -29,6 +29,9 @@ REJECT_TEMPLATES = [
     "arbitrary", "vulnerabilities"
 ]
 
+LLM_LIST = ["llama3-8b-8192", "gemini-2.0-flash", "gpt-4o", "claude-3-5-sonnet-20241022", "deepseek-chat"]
+
+
 def is_rejection(response):
     response_lower = response.lower()
     for template in REJECT_TEMPLATES:
@@ -55,7 +58,8 @@ def calculate_distances(code, response):
 
     manhattan_distance = float(cityblock(code_vector, response_vector))  # Convert to float
 
-    print(f"Calculated Manhattan distance: Manhattan={manhattan_distance}")  # Debugging print
+
+    print(f"Calculated manhattan distance: Manhattan={manhattan_distance}")  # Debugging print
 
     return manhattan_distance
 
@@ -139,26 +143,34 @@ def analyze_json_files(input_dir, output_dir, response_dir):
                 "LLM_distances": {}
             }
 
-            for category in ["Summary", "Details"]:
-                for llm, response in output_item["Responses"][category].items():
-                    print(f"  Processing LLM {llm} and category {category}") #Debug
-                    # Check for API errors or rejections
-                    if "API Error" in response or "429" in response:
-                        print(f"    Skipping due to API error in response from {llm} {category}") #Debug
-                        continue # Skip if API error
-                    rejection, _ = is_rejection(response)
-                    if rejection:
-                        print(f"    Skipping due to rejection in response from {llm} {category}") #Debug
-                        continue # Skip if rejection
+            for llm in LLM_LIST:
+                prompt_results["LLM_distances"][llm] = {}
+                for category in ["Summary", "Details"]:
+                    # First, check if the LLM and category combination exists in the output data.
+                    if llm in output_item["Responses"][category]:
+                        response = output_item["Responses"][category][llm]
+                        print(f"  Processing LLM {llm} and category {category}") #Debug
 
-                    # Calculate distances
-                    manhattan_distance = calculate_distances(code, response)
+                        # Check for API errors or rejections
+                        if "API Error" in response or "429" in response:
+                            print(f"    Skipping due to API error in response from {llm} {category}") #Debug
+                            prompt_results["LLM_distances"][llm][category] = {"manhattan": None}  # Mark as None due to error
+                            continue # Skip if API error
+                        rejection, _ = is_rejection(response)
+                        if rejection:
+                            print(f"    Skipping due to rejection in response from {llm} {category}") #Debug
+                            prompt_results["LLM_distances"][llm][category] = {"manhattan": None}  # Mark as None due to rejection
+                            continue # Skip if rejection
 
-                    if llm not in prompt_results["LLM_distances"]:
-                        prompt_results["LLM_distances"][llm] = {}
-                    prompt_results["LLM_distances"][llm][category] = {
-                        "manhattan": manhattan_distance,
-                    }
+                        # Calculate distances
+                        manhattan_distance = calculate_distances(code, response)
+                        prompt_results["LLM_distances"][llm][category] = {
+                            "manhattan": manhattan_distance,
+                        }
+                    else:
+                        # If the LLM or category doesn't exist, populate with None
+                        print(f"  LLM {llm} or category {category} not found in output data.  Setting manhattan to None.") #Debug
+                        prompt_results["LLM_distances"][llm][category] = {"manhattan": None}
 
             distance_results["prompt_distances"].append(prompt_results) # Append prompt results to the main results
             print(f"  Finished processing prompt {i+1}")  # Debug
