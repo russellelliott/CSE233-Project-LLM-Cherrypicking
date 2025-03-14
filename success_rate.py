@@ -1,5 +1,7 @@
 import json
 import os
+import matplotlib.pyplot as plt
+
 
 def analyze_grouped_data(file_list):
     """
@@ -66,9 +68,35 @@ def calculate_success_rate(llm_data):
     return (llm_data["success"] / total_calls) * 100 if total_calls > 0 else 0
 
 
+def create_overall_performance_bar_graph(json_file):
+    """
+    Creates a bar graph of overall LLM performance based on a JSON file.
+
+    Args:
+        json_file (str): Path to the JSON file containing the overall LLM performance data.
+    """
+
+    with open(json_file, "r") as f:
+        data = json.load(f)
+
+    llms = list(data.keys())[:-2]  # Exclude the last two elements ("total_prompts", "overall_success_rate")
+    success_rates = [data[llm]["success_rate"] for llm in llms]
+
+    plt.figure(figsize=(12, 6))  # Adjust figure size if needed
+    plt.bar(llms, success_rates, color='skyblue')
+    plt.xlabel("LLMs")
+    plt.ylabel("Success Rate (%)")
+    plt.title("Overall LLM Performance")
+    plt.ylim(0, 100)  # Set y-axis limit to 100%
+    plt.xticks(rotation=45, ha="right")  # Rotate x-axis labels for better readability
+    plt.tight_layout()  # Adjust layout to prevent labels from overlapping
+    plt.savefig("overall_llm_performance_bar_graph.png")  # Save the graph as an image
+    plt.show()
+
+
 def main():
     """
-    Main function to perform the analysis, print the results, and output prompt-level data to a text file.
+    Main function to perform the analysis, output JSON files, and create the bar graph.
     """
 
     file_list = [
@@ -78,47 +106,50 @@ def main():
 
     llm_performance, overall_success_rate, total_prompts, prompt_category_data = analyze_grouped_data(file_list)
 
-    output_file = "prompt_category_analysis.txt"
-    with open(output_file, "w") as f:
-        f.write("LLM Performance Analysis by Prompt Category:\n\n")
+    # Prepare data for overall performance JSON output
+    overall_json_output = {}
+    ranked_llms = sorted(
+        llm_performance.items(),
+        key=lambda item: calculate_success_rate(item[1]),
+        reverse=True
+    )
 
-        # Iterate through each prompt category
-        for category, category_data in prompt_category_data.items():
-            f.write(f"Category: {category}\n")
+    for rank, (llm, metrics) in enumerate(ranked_llms, 1):
+        success_rate = calculate_success_rate(metrics)
+        overall_json_output[llm] = {
+            "successes": metrics["success"],
+            "rejections": metrics["rejection"],
+            "api_errors": metrics["api_error"],
+            "success_rate": success_rate
+        }
 
-            # Calculate and sort LLMs by success rate within this category
-            ranked_llms = sorted(
-                category_data.items(),
-                key=lambda item: calculate_success_rate(item[1]),
-                reverse=True
-            )
+    overall_json_output["total_prompts"] = total_prompts
+    overall_json_output["overall_success_rate"] = overall_success_rate
 
-            # Output the ranked LLM performance for the category
-            for rank, (llm, metrics) in enumerate(ranked_llms, 1):
-                success_rate = calculate_success_rate(metrics)
-                f.write(f"{rank}. {llm}:\n")
-                f.write(f"   Successes: {metrics['success']}\n")
-                f.write(f"   Rejections: {metrics['rejection']}\n")
-                f.write(f"   API Errors: {metrics['api_error']}\n")
-                f.write(f"   Success Rate: {success_rate:.2f}%\n")
+    # Output overall performance to JSON file
+    overall_output_file = "overall_llm_performance.json"
+    with open(overall_output_file, "w") as f:
+        json.dump(overall_json_output, f, indent=4)
+    print(f"\nOverall LLM performance saved to {overall_output_file}")
 
-            f.write("\n")  # Add a separator between categories
+    # Prepare data for category-level performance JSON output
+    category_json_output = {}
+    for category, category_data in prompt_category_data.items():
+        category_json_output[category] = {}
+        for llm, metrics in category_data.items():
+            success_rate = calculate_success_rate(metrics)
+            category_json_output[category][llm] = {"success_rate": success_rate}
+    category_json_output["total_prompts"] = total_prompts
+    category_json_output["overall_success_rate"] = overall_success_rate
 
-        # Overall summary
-        f.write("Overall LLM Performance:\n")
-        ranked_llms_overall = sorted(
-            llm_performance.items(),
-            key=lambda item: (item[1]["success"] + item[1]["rejection"] + item[1]["api_error"]),  # Sort by total calls
-            reverse=True
-        )
+    # Output category-level performance to JSON file
+    category_output_file = "prompt_category_analysis.json"
+    with open(category_output_file, "w") as f:
+        json.dump(category_json_output, f, indent=4)
+    print(f"Category-level analysis saved to {category_output_file}")
 
-        # Output overall metrics.
-        total_prompts = len(prompt_category_data)
-        f.write(f"\nTotal number of unique prompts: {total_prompts}\n")
-        f.write(f"Overall Success Rate: {overall_success_rate:.2f}%\n")
-
-
-    print(f"\nPrompt-level analysis saved to {output_file}")
+    # Create the overall performance bar graph
+    create_overall_performance_bar_graph(overall_output_file)
 
 
 if __name__ == "__main__":
