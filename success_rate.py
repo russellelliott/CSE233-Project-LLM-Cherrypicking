@@ -87,6 +87,11 @@ def create_overall_performance_bar_graph(json_file, output_dir, file_prefix):
 
     plt.figure(figsize=(12, 6))  # Adjust figure size if needed
     plt.bar(llms, success_rates, color='skyblue')
+
+    # Add labels to the bars
+    for i, rate in enumerate(success_rates):
+        plt.text(i, rate + 1, f"{rate:.1f}%", ha='center', va='bottom')
+
     plt.xlabel("LLMs")
     plt.ylabel("Success Rate (%)")
     plt.title("Overall LLM Performance")
@@ -125,6 +130,11 @@ def create_prompt_category_bar_graph(json_file, output_dir, file_prefix):
         x = [pos + (i - n_llms / 2 + bar_width/2) * bar_width for pos in index_positions]  #shift positions for each LLM
         success_rates = [data[category][llm]["success_rate"] for category in categories]
         plt.bar(x, success_rates, bar_width, label=llm)
+
+        # remove percentages in prompt category graph
+        # # Add labels to the bars
+        # for j, rate in enumerate(success_rates):
+        #      plt.text(x[j], rate + 1, f"{rate:.1f}%", ha='center', va='bottom')
 
     # Customize the plot
     plt.xlabel("Prompt Category", fontsize=14)
@@ -168,8 +178,38 @@ def create_comparison_bar_graph(file1, file2, output_dir, filename="comparison_g
     width = 0.35  # the width of the bars
 
     fig, ax = plt.subplots(figsize=(14, 7))
-    rects1 = ax.bar(x - width/2, success_rates1, width, label=os.path.basename(file1).replace("_overall_llm_performance.json", "").replace("_", " "))
-    rects2 = ax.bar(x + width/2, success_rates2, width, label=os.path.basename(file2).replace("_overall_llm_performance.json", "").replace("_", " "))
+    # Get the filenames without the extensions
+    file1_name = os.path.basename(file1).replace("_overall_llm_performance.json", "").replace("_", " ")
+    file2_name = os.path.basename(file2).replace("_overall_llm_performance.json", "").replace("_", " ")
+
+    # Define specific labels
+    if "date 2025 03 08" in file1_name.lower():
+        file1_label = "Vanilla Prompts"
+    else:
+        file1_label = "Prompts with Context"  #default labeling
+
+    if "date 2025 03 08" in file2_name.lower():
+        file2_label = "Vanilla Prompts"
+    else:
+        file2_label = "Prompts with Context" #default labeling
+
+    # Apply bar labels using filenames from the bar graphs
+    rects1 = ax.bar(x - width/2, success_rates1, width, label=file1_label)
+    rects2 = ax.bar(x + width/2, success_rates2, width, label=file2_label)
+
+    # Add labels to the bars
+    def autolabel(rects):
+        """Attach a text label above each bar in *rects*, displaying its height."""
+        for rect in rects:
+            height = rect.get_height()
+            ax.annotate(f'{height:.1f}%',
+                        xy=(rect.get_x() + rect.get_width() / 2, height),
+                        xytext=(0, 3),  # 3 points vertical offset
+                        textcoords="offset points",
+                        ha='center', va='bottom')
+
+    autolabel(rects1)
+    autolabel(rects2)
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_ylabel('Success Rate (%)')
@@ -184,57 +224,6 @@ def create_comparison_bar_graph(file1, file2, output_dir, filename="comparison_g
 
     plt.savefig(os.path.join(output_dir, filename))
     plt.close()
-
-# removed prompt category comparison graph
-# def create_comparison_prompt_category_graph(file1, file2, output_dir, filename="comparison_prompt_category_graph.png"):
-#     """
-#     Creates a grouped bar graph comparing prompt category success rates from two JSON files.
-#     """
-#     with open(file1, "r") as f:
-#         data1 = json.load(f)
-#     with open(file2, "r") as f:
-#         data2 = json.load(f)
-
-#     # Extract categories and LLMs
-#     categories1 = list(data1.keys())[:-2]
-#     categories2 = list(data2.keys())[:-2]
-#     all_categories = sorted(list(set(categories1 + categories2)))  # Combine and sort categories
-
-#     # Extract LLMs from the first category (assuming consistent LLMs across categories)
-#     llms1 = list(data1.get(categories1[0], {}).keys()) if categories1 else []
-#     llms2 = list(data2.get(categories2[0], {}).keys()) if categories2 else []
-#     all_llms = sorted(list(set(llms1 + llms2)))
-
-#     n_llms = len(all_llms)
-#     bar_width = 0.8 / (2 * n_llms)  # Reduced bar width to accommodate both files
-#     group_width = 1
-
-#     plt.figure(figsize=(18, 8))  # Adjusted figure size for better readability
-#     index_positions = np.arange(len(all_categories))
-
-#     # Iterate through LLMs and plot bars for both files
-#     for i, llm in enumerate(all_llms):
-#         # Calculate x positions for the bars for file1
-#         x1 = [pos + (i - n_llms / 2) * 2 * bar_width - bar_width/2 for pos in index_positions]
-#         success_rates1 = [data1.get(category, {}).get(llm, {}).get("success_rate", 0) for category in all_categories]
-#         plt.bar(x1, success_rates1, bar_width, label=f"{os.path.basename(file1).replace('_prompt_category_analysis.json', '').replace('_', ' ')} - {llm}")
-
-#         # Calculate x positions for the bars for file2
-#         x2 = [pos + (i - n_llms / 2) * 2 * bar_width + bar_width/2 for pos in index_positions]
-#         success_rates2 = [data2.get(category, {}).get(llm, {}).get("success_rate", 0) for category in all_categories]
-#         plt.bar(x2, success_rates2, bar_width, label=f"{os.path.basename(file2).replace('_prompt_category_analysis.json', '').replace('_', ' ')} - {llm}")
-
-#     # Customize the plot
-#     plt.xlabel("Prompt Category", fontsize=14)
-#     plt.ylabel("Success Rate (%)", fontsize=14)
-#     plt.title("LLM Performance by Prompt Category Comparison", fontsize=16)
-#     plt.xticks(index_positions, all_categories, rotation=45, ha="right")
-#     plt.ylim(0, 100)
-#     plt.legend(loc='upper left', bbox_to_anchor=(1, 1))  # Place legend outside the plot
-#     plt.tight_layout(rect=[0, 0, 0.85, 1])  # Adjust layout to accommodate legend
-
-#     plt.savefig(os.path.join(output_dir, filename))
-#     plt.close()
 
 
 def main():

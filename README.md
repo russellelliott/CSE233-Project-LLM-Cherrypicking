@@ -13,3 +13,12 @@ after that, run `success_rate.py` to produce success rate graps for the two expe
 `distance.py` gets the manhattan distance and euclidean distance of the outputs from a directory
 
 `cosine_analysis.py` analyzes the cosine file and outputs the average of it across the results of the llms that succeeded
+
+`success_rate.py` generates:
+1. success rates for LLMs of vanila prompts (no added context)
+    1. break down by LLM
+    2. Overall performance of each LLM
+2. success rates for LLMs of prompts with context
+    1. break down by LLM
+    2. Overall performance of each LLM
+3. Comparison graph of overall performance of LLMs between context-free and context runs.
