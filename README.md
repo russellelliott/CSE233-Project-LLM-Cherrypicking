@@ -10,9 +10,9 @@ then run these files to get the neccesary graphs and data
 
 after that, run `success_rate.py` to produce success rate graps for the two experiments as well as a graph comparing the success rates of them
 
-`distance.py` gets the manhattan distance and euclidean distance of the outputs from a directory
-given the distance JSONs generated in distance.py, produces graphs showing the overall distance between generated and database code from the LLMs (distance_results)
-`distance_graph.py` does a similar thing, but stacks them to access overall performance
+`distance.py` gets the cosine distance of the outputs from a directory. given the distance JSONs generated in distance.py, produces graphs showing the overall distance between generated and database code from the LLMs (distance_results)
+
+`distance_graph.py` does a similar thing to `distance_py`, but stacks them to access overall performance
 
 `cosine_analysis.py` analyzes the cosine file and outputs the average of it across the results of the llms that succeeded
 
